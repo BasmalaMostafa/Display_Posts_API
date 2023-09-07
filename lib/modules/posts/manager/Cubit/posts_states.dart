@@ -1,8 +1,14 @@
+import 'package:training_task1/models/post_model.dart';
+
 abstract class PostsStates{}
 
 class PostsInitialState extends PostsStates {}
 
-class GetPostsSuccessState extends PostsStates{}
+class GetPostsSuccessState extends PostsStates{
+  final List<PostModel> posts;
+
+  GetPostsSuccessState(this.posts);
+}
 
 class GetPostsLoadingState extends PostsStates{}
 
