@@ -33,20 +33,20 @@ class PostsCubit extends Cubit<PostsStates>
     });
   }
 
-  void getUsers(){
-    emit(GetUsersLoadingState());
-
-    DioHelper.getData(
-        url: 'users').then((value){
-      users = value.data;
-
-      emit(GetUsersSuccessState());
-    }).catchError((error){
-      if (kDebugMode) {
-        print(error.toString());
-      }
-      emit(GetUsersErrorState(error.toString()));
-    });
-  }
+  // void getUsers() {
+  //   emit(GetUsersLoadingState());
+  //
+  //   DioHelper.getData(
+  //       url: 'users').then((value) {
+  //     users = value.data;
+  //
+  //     emit(GetUsersSuccessState());
+  //   }).catchError((error){
+  //     if (kDebugMode) {
+  //       print(error.toString());
+  //     }
+  //     emit(GetUsersErrorState(error.toString()));
+  //   });
+  // }
 
 }

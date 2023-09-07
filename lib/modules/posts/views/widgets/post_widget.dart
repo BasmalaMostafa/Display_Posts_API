@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../shared/Components/components.dart';
 import '../../../../shared/Components/constants.dart';
 
-Widget post(post,users){
+Widget post(post){
   return Container(
     decoration: BoxDecoration(
       color: Colors.white,
@@ -22,13 +22,13 @@ Widget post(post,users){
               style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15)
           ),
           const SizedBox(height:10),
-          Row(
-            children: [
-              const Text('Written By : ',style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('${users[post.userId-1]['name']}',
-                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: myOrange))
-            ],
-          )
+          // Row(
+          //   children: [
+          //     const Text('Written By : ',style: TextStyle(fontWeight: FontWeight.bold)),
+          //     Text('${users[post.userId-1]['name']}',
+          //         style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: myOrange))
+          //   ],
+          // )
         ],
       ),
     ),

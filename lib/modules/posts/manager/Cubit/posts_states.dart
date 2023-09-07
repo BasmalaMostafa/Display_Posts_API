@@ -18,13 +18,13 @@ class GetPostsErrorState extends PostsStates {
   GetPostsErrorState(this.error);
 }
 
-class GetUsersSuccessState extends PostsStates{}
-
-class GetUsersLoadingState extends PostsStates{}
-
-class GetUsersErrorState extends PostsStates {
-  late String error;
-
-  GetUsersErrorState(this.error);
-}
+// class GetUsersSuccessState extends PostsStates{}
+//
+// class GetUsersLoadingState extends PostsStates{}
+//
+// class GetUsersErrorState extends PostsStates {
+//   late String error;
+//
+//   GetUsersErrorState(this.error);
+//}
 
