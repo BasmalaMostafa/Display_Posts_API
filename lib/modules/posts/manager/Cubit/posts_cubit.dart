@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_task1/models/post_model.dart';
 import 'package:training_task1/modules/posts/manager/Cubit/posts_states.dart';
 import 'package:training_task1/shared/network/remote/dio_helper.dart';
+
+import '../../../../core/Error/Failure.dart';
 
 class PostsCubit extends Cubit<PostsStates>
 {
@@ -13,10 +16,10 @@ class PostsCubit extends Cubit<PostsStates>
 
   static PostsCubit get(context) => BlocProvider.of(context);
   
-  void getPosts(){
-    emit(GetPostsLoadingState());
+  Future<void> getPosts() async {
+    emit(PostsLoadingState());
 
-    DioHelper.getData(
+    await DioHelper.getData(
         url: 'posts').then((value){
          for (var post in value.data) {
            posts.add(PostModel.fromJson(post));
@@ -24,12 +27,21 @@ class PostsCubit extends Cubit<PostsStates>
          if (kDebugMode) {
            print(posts);
          }
-          emit(GetPostsSuccessState(posts));
+          emit(PostsSuccessState(posts));
     }).catchError((error){
+
       if (kDebugMode) {
         print(error.toString());
       }
-      emit(GetPostsErrorState(error.toString()));
+      ServerFailure failure;
+      if(error is DioException){
+        failure= ServerFailure.fromDioException(error);
+      }else{
+        failure= ServerFailure(errMessage: error.toString());
+
+      }
+
+      emit(PostsErrorState(failure.errMessage));
     });
   }
 

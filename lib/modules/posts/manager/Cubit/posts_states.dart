@@ -4,18 +4,18 @@ abstract class PostsStates{}
 
 class PostsInitialState extends PostsStates {}
 
-class GetPostsSuccessState extends PostsStates{
+class PostsSuccessState extends PostsStates{
   final List<PostModel> posts;
 
-  GetPostsSuccessState(this.posts);
+  PostsSuccessState(this.posts);
 }
 
-class GetPostsLoadingState extends PostsStates{}
+class PostsLoadingState extends PostsStates{}
 
-class GetPostsErrorState extends PostsStates {
+class PostsErrorState extends PostsStates {
   late String error;
 
-  GetPostsErrorState(this.error);
+  PostsErrorState(this.error);
 }
 
 // class GetUsersSuccessState extends PostsStates{}

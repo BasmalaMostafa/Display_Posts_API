@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 Widget separate() =>Padding(
-  padding: const EdgeInsets.symmetric(vertical: 10.0),
+  padding: EdgeInsets.symmetric(vertical: Dimensions().bodyPadding),
   child: Container(
     height: 1,
     width: double.infinity,
-    color: grey,
+    color: MyColors().grey,
   ),
 );
 
@@ -21,5 +21,5 @@ myAppBar(
     icon: const Icon(Icons.arrow_back_ios_sharp),
   ),
   title: Text(text),
-  backgroundColor: myOrange,
+  backgroundColor: MyColors().myTeal,
 );
