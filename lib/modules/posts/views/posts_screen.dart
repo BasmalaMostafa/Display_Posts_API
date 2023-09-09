@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_task1/modules/posts/Repos/posts_api_impl.dart';
 import 'package:training_task1/modules/posts/views/widgets/post_widget.dart';
 import 'package:training_task1/shared/Components/constants.dart';
 
@@ -14,12 +15,12 @@ class PostsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) =>PostsCubit(PostsInitialState)..getPosts(),
+      create: (BuildContext context) =>PostsCubit(PostsInitialState,PostsAPI())..fetchPosts(),
       child: Scaffold(
         appBar: myAppBar(text: Strings().appBar),
         body: RefreshIndicator(
           onRefresh: () async{
-            return await PostsCubit.get(context).getPosts();
+            return await PostsCubit.get(context).fetchPosts();
           },
           child: Container(
             color: MyColors().greyLight,
@@ -28,7 +29,15 @@ class PostsScreen extends StatelessWidget {
                 //List users = PostsCubit.get(context).users;
 
                 if (state is PostsLoadingState) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Container(
+                    color: MyColors().white,
+                    child: Center(child: CircularProgressIndicator(
+                      backgroundColor: MyColors().grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          MyColors().myTeal
+                      ),
+                    )),
+                  );
                 } else if (state is PostsSuccessState) {
                   if(state.posts.isEmpty){
                     return Container(

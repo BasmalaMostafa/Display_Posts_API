@@ -1,48 +1,35 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_task1/models/post_model.dart';
+import 'package:training_task1/modules/posts/Repos/posts_api_impl.dart';
+import 'package:training_task1/modules/posts/Repos/posts_repo.dart';
 import 'package:training_task1/modules/posts/manager/Cubit/posts_states.dart';
 import 'package:training_task1/shared/network/remote/dio_helper.dart';
 
 import '../../../../core/Error/Failure.dart';
+import '../../models/post_model.dart';
 
 class PostsCubit extends Cubit<PostsStates>
 {
-  PostsCubit(initialState) : super(PostsInitialState());
+  PostsCubit(initialState,this.postsRepo) : super(PostsInitialState());
   
-  static List <PostModel>posts =[];
-  List users =[];
+  late var posts;
+  final PostsRepo postsRepo;
+  //List users =[];
 
   static PostsCubit get(context) => BlocProvider.of(context);
   
-  Future<void> getPosts() async {
+  Future<void> fetchPosts() async {
     emit(PostsLoadingState());
 
-    await DioHelper.getData(
-        url: 'posts').then((value){
-         for (var post in value.data) {
-           posts.add(PostModel.fromJson(post));
-         }
-         if (kDebugMode) {
-           print(posts);
-         }
-          emit(PostsSuccessState(posts));
-    }).catchError((error){
+    posts= await postsRepo.getAllPosts();
 
-      if (kDebugMode) {
-        print(error.toString());
-      }
-      ServerFailure failure;
-      if(error is DioException){
-        failure= ServerFailure.fromDioException(error);
-      }else{
-        failure= ServerFailure(errMessage: error.toString());
-
-      }
-
-      emit(PostsErrorState(failure.errMessage));
-    });
+    posts.fold(
+          (failure) => emit(PostsErrorState(failure.errMessage)),
+          (posts) {
+            emit(PostsSuccessState(posts));
+      },
+    );
   }
 
   // void getUsers() {

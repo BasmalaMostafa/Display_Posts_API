@@ -1,4 +1,6 @@
-import 'package:training_task1/models/post_model.dart';
+
+
+import '../../models/post_model.dart';
 
 abstract class PostsStates{}
 
